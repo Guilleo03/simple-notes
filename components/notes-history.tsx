@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import type { Locale, Translations } from "@/lib/i18n"
 
 export interface SavedNote {
   id: string
@@ -17,19 +18,21 @@ interface NotesHistoryProps {
   activeId: string
   onRestore: (note: SavedNote) => void
   onDelete: (id: string) => void
+  t: Translations
+  locale: Locale
 }
 
-function formatDate(ts: number) {
+function formatDate(ts: number, t: Translations, locale: Locale) {
   const d = new Date(ts)
   const now = new Date()
   const diffMs = now.getTime() - d.getTime()
   const diffDays = Math.floor(diffMs / 86400000)
   if (diffDays === 0) {
-    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    return d.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" })
   }
-  if (diffDays === 1) return "Yesterday"
-  if (diffDays < 7) return `${diffDays} days ago`
-  return d.toLocaleDateString([], { month: "short", day: "numeric" })
+  if (diffDays === 1) return t.timeYesterday
+  if (diffDays < 7) return t.timeDaysAgo(diffDays)
+  return d.toLocaleDateString(locale, { month: "short", day: "numeric" })
 }
 
 export function NotesHistory({
@@ -39,6 +42,8 @@ export function NotesHistory({
   activeId,
   onRestore,
   onDelete,
+  t,
+  locale,
 }: NotesHistoryProps) {
   const panelRef = useRef<HTMLDivElement>(null)
 
@@ -82,17 +87,17 @@ export function NotesHistory({
       <div
         ref={panelRef}
         role="dialog"
-        aria-label="Note history"
+        aria-label={t.historyTitle}
         className={`fixed top-0 right-0 z-40 h-full w-72 sm:w-80 bg-card border-l border-border flex flex-col shadow-xl transition-transform duration-200 ease-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-          <span className="text-sm font-semibold text-foreground tracking-tight">History</span>
+          <span className="text-sm font-semibold text-foreground tracking-tight">{t.historyTitle}</span>
           <button
             onClick={onClose}
-            title="Close history"
+            title={t.closeHistory}
             className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-[var(--surface-hover)] transition-colors"
           >
             <CloseIcon />
@@ -103,7 +108,7 @@ export function NotesHistory({
         <div className="flex-1 overflow-y-auto py-2">
           {notes.length === 0 ? (
             <p className="px-5 py-8 text-sm text-muted-foreground text-center">
-              No saved notes yet.
+              {t.historyEmpty}
             </p>
           ) : (
             <ul>
@@ -123,13 +128,13 @@ export function NotesHistory({
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate leading-snug">
-                          {note.title || "Untitled"}
+                          {note.title || t.historyUntitled}
                         </p>
                         <p className="text-xs text-muted-foreground truncate mt-0.5 leading-snug">
-                          {note.preview || "Empty note"}
+                          {note.preview || t.historyNoPreview}
                         </p>
                         <p className="text-[10px] text-muted-foreground/60 mt-1.5 font-mono">
-                          {formatDate(note.savedAt)}
+                          {formatDate(note.savedAt, t, locale)}
                         </p>
                       </div>
                       <button
@@ -137,7 +142,7 @@ export function NotesHistory({
                           e.stopPropagation()
                           onDelete(note.id)
                         }}
-                        title="Delete this note"
+                        title={t.deleteNote}
                         className="opacity-0 group-hover:opacity-100 p-1 rounded text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all flex-shrink-0 mt-0.5"
                       >
                         <SmallTrashIcon />
@@ -145,7 +150,7 @@ export function NotesHistory({
                     </div>
                     {note.id === activeId && (
                       <span className="inline-block mt-1.5 text-[10px] font-mono text-muted-foreground/60 tracking-wide uppercase">
-                        current
+                        {t.currentNote}
                       </span>
                     )}
                   </div>
@@ -158,7 +163,7 @@ export function NotesHistory({
         {/* Footer hint */}
         <div className="px-5 py-3 border-t border-border">
           <p className="text-[11px] text-muted-foreground/60 leading-relaxed">
-            Notes are saved locally in your browser. Clearing browser data will remove them.
+            {t.historyStorageHint}
           </p>
         </div>
       </div>
