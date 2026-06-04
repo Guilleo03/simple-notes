@@ -1,12 +1,12 @@
-import { NotesClient } from "@/components/notes-client"
+import { NotesClient } from '@/components/notes-client';
+import { APP_URL, DESCRIPTION } from '@/lib/metadata';
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Notes',
-  url: 'https://fast-notes.vercel.app',
-  description:
-    'The best free online notepad. Distraction-free writing with instant auto-save to your browser, dark mode, note history, and no sign-up required.',
+  url: APP_URL,
+  description: DESCRIPTION,
   applicationCategory: 'ProductivityApplication',
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
@@ -24,7 +24,7 @@ const jsonLd = {
     'Download notes as text file',
     'Word and character count',
   ],
-  screenshot: 'https://fast-notes.vercel.app/og-image.png',
+  screenshot: `${APP_URL}/og-image.png`,
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '5',
@@ -32,7 +32,7 @@ const jsonLd = {
     bestRating: '5',
     worstRating: '1',
   },
-}
+};
 
 export default function Page() {
   return (
@@ -43,5 +43,5 @@ export default function Page() {
       />
       <NotesClient />
     </>
-  )
+  );
 }
