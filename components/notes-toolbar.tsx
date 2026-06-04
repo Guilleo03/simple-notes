@@ -60,14 +60,14 @@ export function NotesToolbar({
     <header className="flex items-center justify-between px-6 py-4 border-b border-border">
       {/* Left: branding + save status */}
       <div className="flex items-center gap-3">
-        <span className="font-sans text-foreground font-semibold text-xl tracking-tight select-none">
+        <span className="font-sans text-foreground font-semibold text-lg tracking-tight select-none">
           simple notes.
         </span>
         <span
           role="status"
           aria-live="polite"
           aria-atomic="true"
-          className="text-(--subtle) text-md font-sans transition-opacity">
+          className="text-(--subtle) text-xs font-sans transition-opacity">
           {saved && lastSaved ? timeAgo : ''}
         </span>
       </div>
@@ -77,7 +77,7 @@ export function NotesToolbar({
         {/* Stats */}
         <span
           aria-label={`${wordCount} ${t.words}, ${charCount} ${t.characters}`}
-          className="text-(--subtle) text-md font-sans mr-3 hidden sm:inline"
+          className="text-(--subtle) text-xs font-sans mr-3 hidden sm:inline"
           aria-live="polite">
           {wordCount} {t.words} &middot; {charCount} {t.characters}
         </span>

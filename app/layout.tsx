@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
+import '@fontsource-variable/inter/index.css';
 import './globals.css';
 import { APP_URL, TITLE, DESCRIPTION } from '@/lib/metadata';
 
