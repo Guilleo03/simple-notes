@@ -6,7 +6,7 @@ import { APP_URL, TITLE, DESCRIPTION } from '@/lib/metadata';
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
@@ -105,7 +105,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} font-sans antialiased`} style={{ fontFamily: 'var(--font-sans)' }}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
