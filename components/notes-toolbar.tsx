@@ -7,13 +7,14 @@ interface NotesToolbarProps {
   charCount: number
   saved: boolean
   lastSaved: Date | null
+  historyCount: number
+  onNew: () => void
   onClear: () => void
   onCopy: () => void
   onDownload: () => void
+  onOpenHistory: () => void
   theme: "light" | "dark"
   onToggleTheme: () => void
-  font: "sans" | "mono"
-  onToggleFont: () => void
   focusMode: boolean
   onToggleFocusMode: () => void
 }
@@ -23,13 +24,14 @@ export function NotesToolbar({
   charCount,
   saved,
   lastSaved,
+  historyCount,
+  onNew,
   onClear,
   onCopy,
   onDownload,
+  onOpenHistory,
   theme,
   onToggleTheme,
-  font,
-  onToggleFont,
   focusMode,
   onToggleFocusMode,
 }: NotesToolbarProps) {
@@ -60,7 +62,7 @@ export function NotesToolbar({
       <button
         onClick={onToggleFocusMode}
         title="Exit focus mode"
-        className="fixed top-4 right-4 z-50 text-[var(--subtle)] hover:text-foreground transition-colors text-xs font-mono tracking-widest uppercase opacity-40 hover:opacity-100"
+        className="fixed top-4 right-4 z-50 text-[var(--subtle)] hover:text-foreground transition-colors text-xs font-sans tracking-widest uppercase opacity-40 hover:opacity-100"
       >
         esc
       </button>
@@ -69,13 +71,13 @@ export function NotesToolbar({
 
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-border">
-      {/* Left: branding */}
+      {/* Left: branding + save status */}
       <div className="flex items-center gap-3">
         <span className="text-foreground font-semibold text-sm tracking-tight select-none">
           notes.
         </span>
         {saved && lastSaved && (
-          <span className="text-[var(--subtle)] text-xs font-mono transition-opacity">
+          <span className="text-[var(--subtle)] text-xs font-sans transition-opacity">
             saved {timeAgo}
           </span>
         )}
@@ -84,17 +86,18 @@ export function NotesToolbar({
       {/* Right: actions */}
       <div className="flex items-center gap-1">
         {/* Stats */}
-        <span className="text-[var(--subtle)] text-xs font-mono mr-3 hidden sm:inline">
+        <span className="text-[var(--subtle)] text-xs font-sans mr-3 hidden sm:inline">
           {wordCount} {wordCount === 1 ? "word" : "words"} &middot; {charCount} chars
         </span>
 
-        {/* Font toggle */}
-        <ToolbarButton onClick={onToggleFont} title={font === "sans" ? "Switch to mono" : "Switch to sans"}>
-          {font === "sans" ? (
-            <MonoIcon />
-          ) : (
-            <SansIcon />
-          )}
+        {/* New note */}
+        <ToolbarButton onClick={onNew} title="New note">
+          <NewIcon />
+        </ToolbarButton>
+
+        {/* History */}
+        <ToolbarButton onClick={onOpenHistory} title="Note history" badge={historyCount > 0 ? historyCount : undefined}>
+          <HistoryIcon />
         </ToolbarButton>
 
         {/* Focus mode */}
@@ -113,7 +116,7 @@ export function NotesToolbar({
         </ToolbarButton>
 
         {/* Clear */}
-        <ToolbarButton onClick={onClear} title="Clear notes" danger>
+        <ToolbarButton onClick={onClear} title="Clear note" danger>
           <TrashIcon />
         </ToolbarButton>
 
@@ -134,23 +137,30 @@ function ToolbarButton({
   onClick,
   title,
   danger,
+  badge,
 }: {
   children: React.ReactNode
   onClick: () => void
   title: string
   danger?: boolean
+  badge?: number
 }) {
   return (
     <button
       onClick={onClick}
       title={title}
-      className={`p-2 rounded-md transition-colors ${
+      className={`relative p-2 rounded-md transition-colors ${
         danger
           ? "text-[var(--subtle)] hover:text-destructive hover:bg-destructive/10"
           : "text-[var(--subtle)] hover:text-foreground hover:bg-[var(--surface-hover)]"
       }`}
     >
       {children}
+      {badge !== undefined && (
+        <span className="absolute -top-0.5 -right-0.5 min-w-[14px] h-[14px] rounded-full bg-foreground text-background text-[9px] font-sans font-semibold flex items-center justify-center px-0.5 leading-none">
+          {badge > 99 ? "99+" : badge}
+        </span>
+      )}
     </button>
   )
 }
@@ -216,19 +226,20 @@ function FocusIcon() {
   )
 }
 
-function MonoIcon() {
+function NewIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="4 17 10 11 4 5" />
-      <line x1="12" x2="20" y1="19" y2="19" />
+      <path d="M12 5v14M5 12h14" />
     </svg>
   )
 }
 
-function SansIcon() {
+function HistoryIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 7V4h16v3M9 20h6M12 4v16" />
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+      <path d="M3 3v5h5" />
+      <path d="M12 7v5l4 2" />
     </svg>
   )
 }
