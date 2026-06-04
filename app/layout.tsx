@@ -1,13 +1,8 @@
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import '@fontsource-variable/inter/index.css';
 import './globals.css';
 import { APP_URL, TITLE, DESCRIPTION } from '@/lib/metadata';
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
@@ -105,7 +100,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

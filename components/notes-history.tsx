@@ -129,7 +129,7 @@ export function NotesHistory({
         <div className="flex items-center justify-between px-5 py-4 border-b border-border">
           <h2
             id={headingId}
-            className="text-md font-semibold text-foreground tracking-tight">
+            className="text-xs font-semibold text-foreground tracking-tight">
             {t.historyTitle}
           </h2>
           <button
@@ -146,7 +146,7 @@ export function NotesHistory({
         {/* Note list */}
         <div className="flex-1 overflow-y-auto py-2">
           {notes.length === 0 ? (
-            <p className="px-5 py-8 text-md text-muted-foreground text-center">
+            <p className="px-5 py-8 text-xs text-muted-foreground text-center">
               {t.historyEmpty}
             </p>
           ) : (
@@ -170,10 +170,10 @@ export function NotesHistory({
                       className="w-full text-left px-3 py-3 rounded-md cursor-pointer hover:bg-(--surface-hover) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
-                          <p className="text-md font-medium truncate leading-snug">
+                          <p className="text-xs font-medium truncate leading-snug">
                             {note.title || t.historyUntitled}
                           </p>
-                          <p className="text-md text-muted-foreground truncate mt-0.5 leading-snug">
+                          <p className="text-xs text-muted-foreground truncate mt-0.5 leading-snug">
                             {note.preview || t.historyNoPreview}
                           </p>
                           <p className="text-[10px] text-muted-foreground/60 mt-1.5 font-mono">

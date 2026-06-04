@@ -236,12 +236,12 @@ export function NotesClient() {
 
       {/* Bottom status bar */}
       <footer className="flex items-center justify-between px-6 py-2 border-t border-border">
-        <span className="text-(--subtle) text-md font-sans sm:hidden">
+        <span className="text-(--subtle) text-xs font-sans sm:hidden">
           {wordCount}
           {t.words[0]} &middot; {charCount}
           {t.characters[0]}
         </span>
-        <span className="text-(--subtle) text-md font-sans hidden sm:inline">
+        <span className="text-(--subtle) text-xs font-sans hidden sm:inline">
           {history.length > 0
             ? t.savedLocally(history.length)
             : t.autoSavedLocally}
@@ -251,7 +251,7 @@ export function NotesClient() {
             <span
               role="status"
               aria-live="polite"
-              className="flex items-center gap-1.5 text-(--subtle) text-md font-sans">
+              className="flex items-center gap-1.5 text-(--subtle) text-xs font-sans">
               <span
                 aria-hidden="true"
                 className="w-1.5 h-1.5 rounded-full bg-green-500/70 inline-block"
@@ -262,7 +262,7 @@ export function NotesClient() {
             <span
               role="status"
               aria-live="polite"
-              className="flex items-center gap-1.5 text-(--subtle) text-md font-sans">
+              className="flex items-center gap-1.5 text-(--subtle) text-xs font-sans">
               <span
                 aria-hidden="true"
                 className="w-1.5 h-1.5 rounded-full bg-amber-500/70 inline-block animate-pulse"
