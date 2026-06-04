@@ -1,12 +1,13 @@
-import type { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next';
+import { APP_URL } from '@/lib/metadata';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://fast-notes.vercel.app',
+      url: APP_URL,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
     },
-  ]
+  ];
 }
