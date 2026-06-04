@@ -57,23 +57,23 @@ export function NotesToolbar({
   };
 
   return (
-    <header className="flex items-center justify-between px-6 py-4 border-b border-border">
+    <header className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-border">
       {/* Left: branding + save status */}
-      <div className="flex items-baseline gap-3">
-        <span className="font-sans text-foreground font-semibold text-lg tracking-tight select-none">
+      <div className="flex items-baseline gap-2 sm:gap-3 min-w-0">
+        <span className="font-sans text-foreground font-semibold text-base sm:text-lg tracking-tight select-none shrink-0">
           simple notes.
         </span>
         <span
           role="status"
           aria-live="polite"
           aria-atomic="true"
-          className="text-(--subtle) text-xs font-sans transition-opacity">
+          className="text-(--subtle) text-xs font-sans transition-opacity hidden sm:inline truncate">
           {saved && lastSaved ? timeAgo : ''}
         </span>
       </div>
 
       {/* Right: actions */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
         {/* Stats */}
         <span
           aria-label={`${wordCount} ${t.words}, ${charCount} ${t.characters}`}
@@ -143,7 +143,7 @@ function ToolbarButton({
       title={title}
       aria-label={title}
       type="button"
-      className={`relative p-2 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+      className={`relative p-1.5 sm:p-2 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
         danger
           ? 'text-(--subtle) hover:text-destructive hover:bg-destructive/10'
           : 'text-(--subtle) hover:text-foreground hover:bg-(--surface-hover)'
