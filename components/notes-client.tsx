@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import { useLocale } from "@/hooks/use-locale"
 import { NotesHistory, type SavedNote } from "./notes-history"
 import { NotesToolbar } from "./notes-toolbar"
 
@@ -38,13 +39,13 @@ function saveHistory(notes: SavedNote[]) {
 }
 
 export function NotesClient() {
+  const { t, locale } = useLocale()
   const [content, setContent] = useState("")
   const [activeId, setActiveId] = useState<string>("")
   const [history, setHistory] = useState<SavedNote[]>([])
   const [saved, setSaved] = useState(false)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
   const [theme, setTheme] = useState<"light" | "dark">("light")
-  const [focusMode, setFocusMode] = useState(false)
   const [historyOpen, setHistoryOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -114,11 +115,6 @@ export function NotesClient() {
     }
   }, [content, activeId, mounted])
 
-  // Focus textarea when entering focus mode
-  useEffect(() => {
-    if (focusMode) textareaRef.current?.focus()
-  }, [focusMode])
-
   const wordCount = content.trim() === "" ? 0 : content.trim().split(/\s+/).length
   const charCount = content.length
 
@@ -135,7 +131,7 @@ export function NotesClient() {
 
   const handleClear = useCallback(() => {
     if (content.length === 0) return
-    if (!confirm("Clear this note? This cannot be undone.")) return
+    if (!confirm(t.confirmClear)) return
     setContent("")
     setSaved(false)
     setLastSaved(null)
@@ -187,17 +183,6 @@ export function NotesClient() {
     [activeId, handleNew],
   )
 
-  // Keyboard shortcut: Escape exits focus mode or closes history
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        if (focusMode) setFocusMode(false)
-      }
-    }
-    window.addEventListener("keydown", handler)
-    return () => window.removeEventListener("keydown", handler)
-  }, [focusMode])
-
   if (!mounted) {
     return (
       <div className="flex h-screen items-center justify-center bg-background">
@@ -220,9 +205,8 @@ export function NotesClient() {
         onDownload={handleDownload}
         onOpenHistory={() => setHistoryOpen(true)}
         theme={theme}
-        onToggleTheme={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
-        focusMode={focusMode}
-        onToggleFocusMode={() => setFocusMode((f) => !f)}
+        onToggleTheme={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+        t={t}
       />
 
       <main className="flex-1 overflow-hidden">
@@ -230,48 +214,35 @@ export function NotesClient() {
           ref={textareaRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder={focusMode ? "" : "Start writing…"}
+          placeholder={t.placeholder}
           spellCheck
-          className={`
-            w-full h-full resize-none bg-transparent text-foreground font-sans
-            placeholder:text-muted-foreground/40
-            focus:outline-none
-            leading-relaxed
-            transition-all duration-300
-            ${
-              focusMode
-                ? "px-[max(2rem,calc(50vw-340px))] py-24 text-lg"
-                : "px-6 sm:px-12 md:px-24 lg:px-[max(6rem,calc(50vw-420px))] py-10 text-base sm:text-lg"
-            }
-          `}
+          className="w-full h-full resize-none bg-transparent text-foreground font-sans placeholder:text-muted-foreground/40 focus:outline-none leading-relaxed px-6 sm:px-12 md:px-24 lg:px-[max(6rem,calc(50vw-420px))] py-10 text-base sm:text-lg"
           autoFocus
         />
       </main>
 
       {/* Bottom status bar */}
-      {!focusMode && (
-        <footer className="flex items-center justify-between px-6 py-2 border-t border-border">
+      <footer className="flex items-center justify-between px-6 py-2 border-t border-border">
           <span className="text-[var(--subtle)] text-xs font-sans sm:hidden">
-            {wordCount}w &middot; {charCount}c
+            {wordCount}{t.words[0]} &middot; {charCount}{t.characters[0]}
           </span>
           <span className="text-[var(--subtle)] text-xs font-sans hidden sm:inline">
-            {history.length > 0 ? `${history.length} note${history.length === 1 ? "" : "s"} saved locally` : "auto-saved locally"}
+            {history.length > 0 ? t.savedLocally(history.length) : t.autoSavedLocally}
           </span>
           <div className="flex items-center gap-2">
             {saved && lastSaved ? (
               <span className="flex items-center gap-1.5 text-[var(--subtle)] text-xs font-sans">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500/70 inline-block" />
-                saved
+                {t.saved}
               </span>
             ) : (
               <span className="flex items-center gap-1.5 text-[var(--subtle)] text-xs font-sans">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500/70 inline-block animate-pulse" />
-                saving…
+                {t.saving}
               </span>
             )}
           </div>
-        </footer>
-      )}
+      </footer>
 
       <NotesHistory
         open={historyOpen}
@@ -280,6 +251,8 @@ export function NotesClient() {
         activeId={activeId}
         onRestore={handleRestore}
         onDelete={handleDeleteNote}
+        t={t}
+        locale={locale}
       />
     </div>
   )

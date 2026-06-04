@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import type { Translations } from "@/lib/i18n"
 
 interface NotesToolbarProps {
   wordCount: number
@@ -15,8 +16,7 @@ interface NotesToolbarProps {
   onOpenHistory: () => void
   theme: "light" | "dark"
   onToggleTheme: () => void
-  focusMode: boolean
-  onToggleFocusMode: () => void
+  t: Translations
 }
 
 export function NotesToolbar({
@@ -32,8 +32,7 @@ export function NotesToolbar({
   onOpenHistory,
   theme,
   onToggleTheme,
-  focusMode,
-  onToggleFocusMode,
+  t,
 }: NotesToolbarProps) {
   const [copied, setCopied] = useState(false)
   const [timeAgo, setTimeAgo] = useState("")
@@ -42,9 +41,9 @@ export function NotesToolbar({
     if (!lastSaved) return
     const update = () => {
       const seconds = Math.floor((Date.now() - lastSaved.getTime()) / 1000)
-      if (seconds < 5) setTimeAgo("just now")
-      else if (seconds < 60) setTimeAgo(`${seconds}s ago`)
-      else setTimeAgo(`${Math.floor(seconds / 60)}m ago`)
+      if (seconds < 5) setTimeAgo(t.savedAgo(0))
+      else if (seconds < 60) setTimeAgo(t.savedAgo(seconds))
+      else setTimeAgo(t.timeMinutesAgo(Math.floor(seconds / 60)))
     }
     update()
     const id = setInterval(update, 5000)
@@ -57,28 +56,16 @@ export function NotesToolbar({
     setTimeout(() => setCopied(false), 1500)
   }
 
-  if (focusMode) {
-    return (
-      <button
-        onClick={onToggleFocusMode}
-        title="Exit focus mode"
-        className="fixed top-4 right-4 z-50 text-[var(--subtle)] hover:text-foreground transition-colors text-xs font-sans tracking-widest uppercase opacity-40 hover:opacity-100"
-      >
-        esc
-      </button>
-    )
-  }
-
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-border">
       {/* Left: branding + save status */}
       <div className="flex items-center gap-3">
-        <span className="text-foreground font-semibold text-sm tracking-tight select-none">
-          notes.
+        <span className="text-foreground font-semibold text-xl tracking-tight select-none">
+          {t.appName}
         </span>
         {saved && lastSaved && (
           <span className="text-[var(--subtle)] text-xs font-sans transition-opacity">
-            saved {timeAgo}
+            {timeAgo}
           </span>
         )}
       </div>
@@ -87,36 +74,31 @@ export function NotesToolbar({
       <div className="flex items-center gap-1">
         {/* Stats */}
         <span className="text-[var(--subtle)] text-xs font-sans mr-3 hidden sm:inline">
-          {wordCount} {wordCount === 1 ? "word" : "words"} &middot; {charCount} chars
+          {wordCount} {t.words} &middot; {charCount} {t.characters}
         </span>
 
         {/* New note */}
-        <ToolbarButton onClick={onNew} title="New note">
+        <ToolbarButton onClick={onNew} title={t.newNote}>
           <NewIcon />
         </ToolbarButton>
 
         {/* History */}
-        <ToolbarButton onClick={onOpenHistory} title="Note history" badge={historyCount > 0 ? historyCount : undefined}>
+        <ToolbarButton onClick={onOpenHistory} title={t.openHistory} badge={historyCount > 0 ? historyCount : undefined}>
           <HistoryIcon />
         </ToolbarButton>
 
-        {/* Focus mode */}
-        <ToolbarButton onClick={onToggleFocusMode} title="Enter focus mode">
-          <FocusIcon />
-        </ToolbarButton>
-
         {/* Copy */}
-        <ToolbarButton onClick={handleCopy} title="Copy to clipboard">
+        <ToolbarButton onClick={handleCopy} title={copied ? t.copied : t.copyToClipboard}>
           {copied ? <CheckIcon /> : <CopyIcon />}
         </ToolbarButton>
 
         {/* Download */}
-        <ToolbarButton onClick={onDownload} title="Download as .txt">
+        <ToolbarButton onClick={onDownload} title={t.downloadNote}>
           <DownloadIcon />
         </ToolbarButton>
 
         {/* Clear */}
-        <ToolbarButton onClick={onClear} title="Clear note" danger>
+        <ToolbarButton onClick={onClear} title={t.clearNote} danger>
           <TrashIcon />
         </ToolbarButton>
 
@@ -124,7 +106,7 @@ export function NotesToolbar({
         <div className="w-px h-4 bg-border mx-1" />
 
         {/* Theme toggle */}
-        <ToolbarButton onClick={onToggleTheme} title="Toggle theme">
+        <ToolbarButton onClick={onToggleTheme} title={t.toggleTheme}>
           {theme === "dark" ? <SunIcon /> : <MoonIcon />}
         </ToolbarButton>
       </div>
@@ -218,13 +200,6 @@ function TrashIcon() {
   )
 }
 
-function FocusIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
-    </svg>
-  )
-}
 
 function NewIcon() {
   return (
