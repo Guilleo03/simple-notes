@@ -185,8 +185,13 @@ export function NotesClient() {
 
   if (!mounted) {
     return (
-      <div className="flex h-screen items-center justify-center bg-background">
-        <div className="w-2 h-2 rounded-full bg-muted-foreground animate-pulse" />
+      <div
+        className="flex h-screen items-center justify-center bg-background"
+        role="status"
+        aria-label="Loading"
+        aria-busy="true"
+      >
+        <div aria-hidden="true" className="w-2 h-2 rounded-full bg-muted-foreground animate-pulse" />
       </div>
     )
   }
@@ -209,12 +214,14 @@ export function NotesClient() {
         t={t}
       />
 
-      <main className="flex-1 overflow-hidden">
+      <main className="flex-1 overflow-hidden" aria-label={t.appName}>
         <textarea
           ref={textareaRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={t.placeholder}
+          aria-label={t.placeholder}
+          aria-multiline="true"
           spellCheck
           className="w-full h-full resize-none bg-transparent text-foreground font-sans placeholder:text-muted-foreground/40 focus:outline-none leading-relaxed px-6 sm:px-12 md:px-24 lg:px-[max(6rem,calc(50vw-420px))] py-10 text-base sm:text-lg"
           autoFocus
@@ -231,13 +238,13 @@ export function NotesClient() {
           </span>
           <div className="flex items-center gap-2">
             {saved && lastSaved ? (
-              <span className="flex items-center gap-1.5 text-[var(--subtle)] text-xs font-sans">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500/70 inline-block" />
+              <span role="status" aria-live="polite" className="flex items-center gap-1.5 text-[var(--subtle)] text-xs font-sans">
+                <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-green-500/70 inline-block" />
                 {t.saved}
               </span>
             ) : (
-              <span className="flex items-center gap-1.5 text-[var(--subtle)] text-xs font-sans">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500/70 inline-block animate-pulse" />
+              <span role="status" aria-live="polite" className="flex items-center gap-1.5 text-[var(--subtle)] text-xs font-sans">
+                <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-amber-500/70 inline-block animate-pulse" />
                 {t.saving}
               </span>
             )}
