@@ -59,7 +59,7 @@ export function NotesToolbar({
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-border">
       {/* Left: branding + save status */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-baseline gap-3">
         <span className="font-sans text-foreground font-semibold text-lg tracking-tight select-none">
           simple notes.
         </span>
