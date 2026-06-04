@@ -65,7 +65,7 @@ export function NotesToolbar({
         </span>
         {saved && lastSaved && (
           <span className="text-[var(--subtle)] text-xs font-sans transition-opacity">
-            {t.saved} {timeAgo}
+            {timeAgo}
           </span>
         )}
       </div>
