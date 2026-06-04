@@ -15,8 +15,6 @@ interface NotesToolbarProps {
   onOpenHistory: () => void
   theme: "light" | "dark"
   onToggleTheme: () => void
-  focusMode: boolean
-  onToggleFocusMode: () => void
 }
 
 export function NotesToolbar({
@@ -32,8 +30,6 @@ export function NotesToolbar({
   onOpenHistory,
   theme,
   onToggleTheme,
-  focusMode,
-  onToggleFocusMode,
 }: NotesToolbarProps) {
   const [copied, setCopied] = useState(false)
   const [timeAgo, setTimeAgo] = useState("")
@@ -57,23 +53,11 @@ export function NotesToolbar({
     setTimeout(() => setCopied(false), 1500)
   }
 
-  if (focusMode) {
-    return (
-      <button
-        onClick={onToggleFocusMode}
-        title="Exit focus mode"
-        className="fixed top-4 right-4 z-50 text-[var(--subtle)] hover:text-foreground transition-colors text-xs font-sans tracking-widest uppercase opacity-40 hover:opacity-100"
-      >
-        esc
-      </button>
-    )
-  }
-
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-border">
       {/* Left: branding + save status */}
       <div className="flex items-center gap-3">
-        <span className="text-foreground font-semibold text-sm tracking-tight select-none">
+        <span className="text-foreground font-semibold text-xl tracking-tight select-none">
           notes.
         </span>
         {saved && lastSaved && (
@@ -98,11 +82,6 @@ export function NotesToolbar({
         {/* History */}
         <ToolbarButton onClick={onOpenHistory} title="Note history" badge={historyCount > 0 ? historyCount : undefined}>
           <HistoryIcon />
-        </ToolbarButton>
-
-        {/* Focus mode */}
-        <ToolbarButton onClick={onToggleFocusMode} title="Enter focus mode">
-          <FocusIcon />
         </ToolbarButton>
 
         {/* Copy */}
@@ -218,13 +197,6 @@ function TrashIcon() {
   )
 }
 
-function FocusIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
-    </svg>
-  )
-}
 
 function NewIcon() {
   return (
