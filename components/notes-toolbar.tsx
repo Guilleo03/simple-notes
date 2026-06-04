@@ -41,7 +41,7 @@ export function NotesToolbar({
     if (!lastSaved) return
     const update = () => {
       const seconds = Math.floor((Date.now() - lastSaved.getTime()) / 1000)
-      if (seconds < 5) setTimeAgo(t.timeJustNow)
+      if (seconds < 5) setTimeAgo(t.savedAgo(0))
       else if (seconds < 60) setTimeAgo(t.savedAgo(seconds))
       else setTimeAgo(t.timeMinutesAgo(Math.floor(seconds / 60)))
     }
