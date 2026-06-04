@@ -1,4 +1,5 @@
-import type { MetadataRoute } from 'next'
+import { APP_URL } from '@/lib/metadata';
+import type { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://fast-notes.vercel.app/sitemap.xml',
-    host: 'https://fast-notes.vercel.app',
-  }
+    sitemap: `${APP_URL}/sitemap.xml`,
+    host: APP_URL,
+  };
 }

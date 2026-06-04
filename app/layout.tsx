@@ -1,17 +1,13 @@
-import { Analytics } from '@vercel/analytics/next'
-import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
+import { Analytics } from '@vercel/analytics/next';
+import type { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { APP_URL, TITLE, DESCRIPTION } from '@/lib/metadata';
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
-})
-
-const APP_URL = 'https://fast-notes.vercel.app'
-const TITLE = 'Notes — Write Freely. Save Instantly.'
-const DESCRIPTION =
-  'The best free online notepad. Distraction-free writing with instant auto-save to your browser, dark mode, note history, and no sign-up required.'
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
@@ -90,7 +86,7 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
-}
+};
 
 export const viewport: Viewport = {
   themeColor: [
@@ -100,12 +96,12 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en" className="bg-background">
@@ -114,5 +110,5 @@ export default function RootLayout({
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
-  )
+  );
 }
