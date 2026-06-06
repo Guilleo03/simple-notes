@@ -119,6 +119,8 @@ export function NotesToolbar({
         <ToolbarButton onClick={onToggleTheme} title={t.toggleTheme}>
           {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
         </ToolbarButton>
+
+
       </div>
     </header>
   );
@@ -302,3 +304,5 @@ function HistoryIcon() {
     </svg>
   );
 }
+
+
