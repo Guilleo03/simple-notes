@@ -1,9 +1,9 @@
-import type { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Notes — Write Freely',
-    short_name: 'Notes',
+    name: 'Simple Notes — Write Freely',
+    short_name: 'Simple Notes',
     description:
       'The best free online notepad. Distraction-free writing with instant auto-save, dark mode, and note history. No sign-up required.',
     start_url: '/',
@@ -33,5 +33,5 @@ export default function manifest(): MetadataRoute.Manifest {
         type: 'image/png',
       },
     ],
-  }
+  };
 }
