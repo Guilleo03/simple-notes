@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
     default: TITLE,
-    template: '%s | Notes',
+    template: '%s | Simple Notes',
   },
   description: DESCRIPTION,
   keywords: [
@@ -27,11 +27,11 @@ export const metadata: Metadata = {
     'instant notes',
     'simple notepad online',
   ],
-  authors: [{ name: 'Notes App' }],
-  creator: 'Notes App',
-  publisher: 'Notes App',
+  authors: [{ name: 'Simple Notes' }],
+  creator: 'Simple Notes',
+  publisher: 'Simple Notes',
   category: 'productivity',
-  applicationName: 'Notes',
+  applicationName: 'Simple Notes',
   generator: 'Next.js',
   referrer: 'origin-when-cross-origin',
   robots: {
@@ -51,13 +51,13 @@ export const metadata: Metadata = {
     url: APP_URL,
     title: TITLE,
     description: DESCRIPTION,
-    siteName: 'Notes',
+    siteName: 'Simple Notes',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Notes — Write freely, save instantly.',
+        alt: 'Simple Notes — Write freely, save instantly.',
         type: 'image/png',
       },
     ],
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     images: ['/og-image.png'],
-    creator: '@notesapp',
+    creator: '@simplenotes',
   },
   alternates: {
     canonical: APP_URL,
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Notes',
+    title: 'Simple Notes',
   },
   formatDetection: {
     telephone: false,
