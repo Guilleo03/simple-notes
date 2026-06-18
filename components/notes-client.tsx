@@ -201,6 +201,12 @@ export function NotesClient() {
     URL.revokeObjectURL(url);
   }, [content]);
 
+  const handleShare = useCallback(() => {
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+    const url = `${window.location.origin}/share#note=${encoded}`;
+    navigator.clipboard.writeText(url);
+  }, [content]);
+
   // Restore a note from history
   const handleRestore = useCallback((note: SavedNote) => {
     setActiveId(note.id);
@@ -253,6 +259,7 @@ export function NotesClient() {
         onClear={handleClear}
         onCopy={handleCopy}
         onDownload={handleDownload}
+        onShare={handleShare}
         onOpenHistory={() => setHistoryOpen(true)}
         theme={theme}
         onToggleTheme={() =>

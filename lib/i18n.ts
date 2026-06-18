@@ -10,6 +10,8 @@ export interface Translations {
   downloadNote: string
   openHistory: string
   toggleTheme: string
+  shareNote: string
+  shareNoteCopied: string
   words: string
   characters: string
   // Save status
@@ -42,6 +44,10 @@ export interface Translations {
   // History misc
   currentNote: string
   historyStorageHint: string
+  // Share / read-only view
+  sharedNoteTitle: string
+  sharedNoteEmpty: string
+  sharedNoteOpenApp: string
 }
 
 const en: Translations = {
@@ -53,6 +59,8 @@ const en: Translations = {
   downloadNote: "Download as .txt",
   openHistory: "Note history",
   toggleTheme: "Toggle theme",
+  shareNote: "Share note (read-only link)",
+  shareNoteCopied: "Link copied!",
   words: "words",
   characters: "characters",
   saving: "saving…",
@@ -78,6 +86,9 @@ const en: Translations = {
   autoSavedLocally: "auto-saved locally",
   currentNote: "current",
   historyStorageHint: "Notes are saved locally in your browser. Clearing browser data will remove them.",
+  sharedNoteTitle: "Shared note",
+  sharedNoteEmpty: "This note is empty.",
+  sharedNoteOpenApp: "Open Simple Notes",
 }
 
 const es: Translations = {
@@ -89,6 +100,8 @@ const es: Translations = {
   downloadNote: "Descargar como .txt",
   openHistory: "Historial de notas",
   toggleTheme: "Cambiar tema",
+  shareNote: "Compartir nota (enlace de solo lectura)",
+  shareNoteCopied: "¡Enlace copiado!",
   words: "palabras",
   characters: "caracteres",
   saving: "guardando…",
@@ -114,6 +127,9 @@ const es: Translations = {
   autoSavedLocally: "guardado automáticamente",
   currentNote: "actual",
   historyStorageHint: "Las notas se guardan localmente en tu navegador. Borrar los datos del navegador las eliminará.",
+  sharedNoteTitle: "Nota compartida",
+  sharedNoteEmpty: "Esta nota está vacía.",
+  sharedNoteOpenApp: "Abrir Simple Notes",
 }
 
 const pt: Translations = {
@@ -125,6 +141,8 @@ const pt: Translations = {
   downloadNote: "Baixar como .txt",
   openHistory: "Histórico de notas",
   toggleTheme: "Alternar tema",
+  shareNote: "Compartilhar nota (link somente leitura)",
+  shareNoteCopied: "Link copiado!",
   words: "palavras",
   characters: "caracteres",
   saving: "salvando…",
@@ -150,6 +168,9 @@ const pt: Translations = {
   autoSavedLocally: "salvo automaticamente",
   currentNote: "atual",
   historyStorageHint: "As notas são salvas localmente no seu navegador. Limpar os dados do navegador as removerá.",
+  sharedNoteTitle: "Nota compartilhada",
+  sharedNoteEmpty: "Esta nota está vazia.",
+  sharedNoteOpenApp: "Abrir Simple Notes",
 }
 
 const fr: Translations = {
@@ -161,6 +182,8 @@ const fr: Translations = {
   downloadNote: "Télécharger en .txt",
   openHistory: "Historique des notes",
   toggleTheme: "Changer de thème",
+  shareNote: "Partager la note (lien lecture seule)",
+  shareNoteCopied: "Lien copié !",
   words: "mots",
   characters: "caractères",
   saving: "enregistrement…",
@@ -186,6 +209,9 @@ const fr: Translations = {
   autoSavedLocally: "enregistrement automatique",
   currentNote: "actuel",
   historyStorageHint: "Les notes sont enregistrées localement dans votre navigateur. Effacer les données du navigateur les supprimera.",
+  sharedNoteTitle: "Note partagée",
+  sharedNoteEmpty: "Cette note est vide.",
+  sharedNoteOpenApp: "Ouvrir Simple Notes",
 }
 
 const de: Translations = {
@@ -197,6 +223,8 @@ const de: Translations = {
   downloadNote: "Als .txt herunterladen",
   openHistory: "Notizverlauf",
   toggleTheme: "Design wechseln",
+  shareNote: "Notiz teilen (Nur-Lese-Link)",
+  shareNoteCopied: "Link kopiert!",
   words: "Wörter",
   characters: "Zeichen",
   saving: "speichern…",
@@ -222,6 +250,9 @@ const de: Translations = {
   autoSavedLocally: "automatisch gespeichert",
   currentNote: "aktuell",
   historyStorageHint: "Notizen werden lokal in Ihrem Browser gespeichert. Beim Löschen der Browserdaten werden sie entfernt.",
+  sharedNoteTitle: "Geteilte Notiz",
+  sharedNoteEmpty: "Diese Notiz ist leer.",
+  sharedNoteOpenApp: "Simple Notes öffnen",
 }
 
 const it: Translations = {
@@ -233,6 +264,8 @@ const it: Translations = {
   downloadNote: "Scarica come .txt",
   openHistory: "Cronologia note",
   toggleTheme: "Cambia tema",
+  shareNote: "Condividi nota (link sola lettura)",
+  shareNoteCopied: "Link copiato!",
   words: "parole",
   characters: "caratteri",
   saving: "salvataggio…",
@@ -258,6 +291,9 @@ const it: Translations = {
   autoSavedLocally: "salvataggio automatico",
   currentNote: "attuale",
   historyStorageHint: "Le note sono salvate localmente nel tuo browser. La cancellazione dei dati del browser le rimuoverà.",
+  sharedNoteTitle: "Nota condivisa",
+  sharedNoteEmpty: "Questa nota è vuota.",
+  sharedNoteOpenApp: "Apri Simple Notes",
 }
 
 const zh: Translations = {
@@ -269,6 +305,8 @@ const zh: Translations = {
   downloadNote: "下载为 .txt",
   openHistory: "笔记历史",
   toggleTheme: "切换主题",
+  shareNote: "分享笔记（只读链接）",
+  shareNoteCopied: "链接已复制！",
   words: "字",
   characters: "字符",
   saving: "保存中…",
@@ -294,6 +332,9 @@ const zh: Translations = {
   autoSavedLocally: "已自动保存",
   currentNote: "当前",
   historyStorageHint: "笔记保存在您的浏览器本地。清除浏览器数据将删除所有笔记。",
+  sharedNoteTitle: "共享笔记",
+  sharedNoteEmpty: "此笔记为空。",
+  sharedNoteOpenApp: "打开 Simple Notes",
 }
 
 export const translations: Record<Locale, Translations> = { en, es, pt, fr, de, it, zh }
