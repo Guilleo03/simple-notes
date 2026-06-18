@@ -49,6 +49,16 @@ export default function Page() {
           <li>No login, no ads, completely free</li>
         </ul>
       </section>
+      <a
+        className="fixed bottom-12 right-6"
+        href="https://fazier.com/launches/www.simple-notes.site"
+        target="_blank">
+        <img
+          src="https://fazier.com/api/v1//public/badges/launch_badges.svg?badge_type=launched&theme=neutral"
+          width={100}
+          alt="Fazier badge"
+        />
+      </a>
       <NotesClient />
     </>
   );
