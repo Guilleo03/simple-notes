@@ -201,16 +201,26 @@ export function NotesClient() {
     URL.revokeObjectURL(url);
   }, [content]);
 
-  const handleShare = useCallback(() => {
-    import('fflate').then(({ deflateSync, strToU8 }) => {
-      const compressed = deflateSync(strToU8(content), { level: 9 });
-      const encoded = btoa(String.fromCharCode(...compressed))
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-        .replace(/=+$/, '');
-      const url = `${window.location.origin}/share#note=${encoded}`;
-      navigator.clipboard.writeText(url);
-    });
+  const handleShare = useCallback(async () => {
+    const { deflateSync, strToU8 } = await import('fflate');
+    const compressed = deflateSync(strToU8(content), { level: 9 });
+    const encoded = btoa(String.fromCharCode(...compressed))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+    const longUrl = `${window.location.origin}/share#note=${encoded}`;
+
+    try {
+      const res = await fetch(
+        `https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`
+      );
+      const data = await res.json();
+      const shortUrl: string = data.shorturl ?? longUrl;
+      await navigator.clipboard.writeText(shortUrl);
+    } catch {
+      // Fallback: copy the long URL if the API fails
+      await navigator.clipboard.writeText(longUrl);
+    }
   }, [content]);
 
   // Restore a note from history
