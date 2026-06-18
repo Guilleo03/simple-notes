@@ -202,9 +202,15 @@ export function NotesClient() {
   }, [content]);
 
   const handleShare = useCallback(() => {
-    const encoded = btoa(unescape(encodeURIComponent(content)));
-    const url = `${window.location.origin}/share#note=${encoded}`;
-    navigator.clipboard.writeText(url);
+    import('fflate').then(({ deflateSync, strToU8 }) => {
+      const compressed = deflateSync(strToU8(content), { level: 9 });
+      const encoded = btoa(String.fromCharCode(...compressed))
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '');
+      const url = `${window.location.origin}/share#note=${encoded}`;
+      navigator.clipboard.writeText(url);
+    });
   }, [content]);
 
   // Restore a note from history

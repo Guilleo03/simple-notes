@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { inflateSync, strFromU8 } from 'fflate';
 import { useLocale } from '@/hooks/use-locale';
 
 const THEME_KEY = 'notes_theme';
@@ -18,12 +19,18 @@ export function SharedNoteClient() {
       (localStorage.getItem(THEME_KEY) as 'light' | 'dark') ?? 'light';
     setTheme(storedTheme);
 
-    // Decode note from URL hash
+    // Decode and decompress note from URL hash
     const hash = window.location.hash;
     const match = hash.match(/^#note=(.+)$/);
     if (match) {
       try {
-        const decoded = decodeURIComponent(escape(atob(match[1])));
+        // Restore URL-safe base64 back to standard base64
+        const base64 = match[1]
+          .replace(/-/g, '+')
+          .replace(/_/g, '/');
+        const binary = atob(base64);
+        const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+        const decoded = strFromU8(inflateSync(bytes));
         setContent(decoded);
       } catch {
         setContent('');
