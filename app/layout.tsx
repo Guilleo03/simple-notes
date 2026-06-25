@@ -32,7 +32,6 @@ export const metadata: Metadata = {
   publisher: 'Simple Notes',
   category: 'productivity',
   applicationName: 'Simple Notes',
-  generator: 'Next.js',
   referrer: 'origin-when-cross-origin',
   robots: {
     index: true,
