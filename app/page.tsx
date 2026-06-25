@@ -35,7 +35,7 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <section className="sr-only">
-        <h1>Simple Notes — Free Online Notepad</h1>
+        <h1>Simple Notes — Free Online Notepad, No Sign-Up Required</h1>
         <p>
           Write notes instantly in your browser. No account or sign-up required.
           Your notes auto-save locally, work offline, and never leave your
@@ -49,16 +49,6 @@ export default function Page() {
           <li>No login, no ads, completely free</li>
         </ul>
       </section>
-      <a
-        className="fixed bottom-12 right-6"
-        href="https://fazier.com/launches/www.simple-notes.site"
-        target="_blank">
-        <img
-          src="https://fazier.com/api/v1//public/badges/launch_badges.svg?badge_type=launched&theme=neutral"
-          width={100}
-          alt="Fazier badge"
-        />
-      </a>
       <NotesClient />
     </>
   );
